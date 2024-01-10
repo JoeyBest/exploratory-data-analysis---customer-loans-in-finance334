@@ -1,4 +1,3 @@
-# %%
 import missingno as msno
 import numpy as np
 import pandas as pd
@@ -9,7 +8,7 @@ from scipy import stats
 from scipy.stats import normaltest
 from statsmodels.graphics.gofplots import qqplot
 from matplotlib import pyplot
-#%% 
+
 class DataFrameTransform:
 
     def __init__(self, df_transform):
@@ -177,7 +176,7 @@ class Plotter:
 
         pyplot.tight_layout()
         pyplot.show()
-# %%
+
 if __name__ ==  "__main__":
     table_of_loans = pd.read_csv('eda.csv')
     df_cols = DataFrameTransform(table_of_loans)
@@ -256,73 +255,69 @@ if __name__ ==  "__main__":
     # code saves file to working directory
     df_cols.save_transformed_data('transformed_loan_data.csv')
 
+    transformed_loans = pd.read_csv('transformed_loan_data.csv')
+    df_cols = DataFrameTransform(transformed_loans)
+    plot = Plotter(transformed_loans)
 
-# %%
-transformed_loans = pd.read_csv('transformed_loan_data.csv')
-df_cols = DataFrameTransform(transformed_loans)
-plot = Plotter(transformed_loans)
+    plot.multi_qq_plot(numerical_cols)
+    # prints qqplot of all columns in 'numerical_cols', some outliers can be seen, lets look closer
+    plot.show_outliers()
+    # boxplot of columns showing outliers present past the IQR
+    plot.boxplot(numerical_cols)
+    #visualised for the numerical_cols
 
-plot.multi_qq_plot(numerical_cols)
-# prints qqplot of all columns in 'numerical_cols', some outliers can be seen, lets look closer
-plot.show_outliers()
-# boxplot of columns showing outliers present past the IQR
-plot.boxplot(numerical_cols)
-#visualised for the numerical_cols
+    # Removing outliers and re-visualising boxplots
+    filtered_df = df_cols.remove_outliers_iqr_dataframe(column= numerical_cols, threshold=1.5)
+    plot.show_outliers_after_removal(dataframe=filtered_df, columns=numerical_cols)
 
-# Removing outliers and re-visualising boxplots
-filtered_df = df_cols.remove_outliers_iqr_dataframe(column= numerical_cols, threshold=1.5)
-plot.show_outliers_after_removal(dataframe=filtered_df, columns=numerical_cols)
-
-# Making the filtered data a variable to use the classes
-df_without_outliers = DataFrameTransform(filtered_df)
-plot_without_outliers = Plotter(filtered_df)
+    # Making the filtered data a variable to use the classes
+    df_without_outliers = DataFrameTransform(filtered_df)
+    plot_without_outliers = Plotter(filtered_df)
 
 
-# Checking data again
-plot_without_outliers.show_missing_nulls()
-df_without_outliers.num_of_nulls()
-# removing the outliers has left Null values, so we will either transform or remove the rows
+    # Checking data again
+    plot_without_outliers.show_missing_nulls()
+    df_without_outliers.num_of_nulls()
+    # removing the outliers has left Null values, so we will either transform or remove the rows
 
-# COLUMN                COUNT   % NULL COUNT
-# loan_amount           54145   0.011080
-# funded_amount_inv     53992   0.293623
-# int_rate              54107   0.081254
-# instalment            54111   0.073868
-# annual_inc            53000   2.125538
-# open_accounts         53631   0.960278
-# total_accounts        53282   1.604772
-# total_payment         53971   0.332404
-# last_payment_amount   53950   0.371184
+    # COLUMN                COUNT   % NULL COUNT
+    # loan_amount           54145   0.011080
+    # funded_amount_inv     53992   0.293623
+    # int_rate              54107   0.081254
+    # instalment            54111   0.073868
+    # annual_inc            53000   2.125538
+    # open_accounts         53631   0.960278
+    # total_accounts        53282   1.604772
+    # total_payment         53971   0.332404
+    # last_payment_amount   53950   0.371184
 
-# values are all very low
-# when imputing outliers, the median is more robust and less influenced by extreme values.
-to_be_median_imputed = ['loan_amount', 'funded_amount_inv',  'int_rate', 'instalment', 'annual_inc', 'open_accounts', 'total_accounts', 'total_payment', 'last_payment_amount']
-df_without_outliers.impute_median(to_be_median_imputed)
+    # values are all very low
+    # when imputing outliers, the median is more robust and less influenced by extreme values.
+    to_be_median_imputed = ['loan_amount', 'funded_amount_inv',  'int_rate', 'instalment', 'annual_inc', 'open_accounts', 'total_accounts', 'total_payment', 'last_payment_amount']
+    df_without_outliers.impute_median(to_be_median_imputed)
 
-# Checking data again
-plot_without_outliers.show_missing_nulls()
-df_without_outliers.num_of_nulls()
-# No Null values
+    # Checking data again
+    plot_without_outliers.show_missing_nulls()
+    df_without_outliers.num_of_nulls()
+    # No Null values
 
-# checking skewness and outliers
-plot_without_outliers.multi_hist_plot(numerical_cols)
-plot_without_outliers.multi_qq_plot(numerical_cols)
-# data improved!
-
-
-# corrolation matrix: checking for multicollinearity issues, will drop overly corrolated columns
-plot_without_outliers.heatmap(numerical_cols)
-
-## Threshold for highly correlated columns is 0.85
-# Multi-linearity between 'loan_amount', 'instalment' & 'funded_amount_inv'
-
-# funded_amount_inv and loan_amount corrolation = 0.96
-# instalmannt and loan_amount corrolation = 0.96
-# instalmannt and funded_amount_inv corrolation = 0.93
-
-# total_payment is highly corrolated with loan_amount, funded_amount_inv and instalment too, but only at 0.81, 0.78 and 0.81 respectively
-# therefore not passed the 0.85 threshold
-
-# desptie 'loan_amount', 'instalment' & 'funded_amount_inv' being past the threshold, they're all important for the analysis stage, so we wont be dropping any of them!
+    # checking skewness and outliers
+    plot_without_outliers.multi_hist_plot(numerical_cols)
+    plot_without_outliers.multi_qq_plot(numerical_cols)
+    # data improved!
 
 
+    # corrolation matrix: checking for multicollinearity issues, will drop overly corrolated columns
+    plot_without_outliers.heatmap(numerical_cols)
+
+    ## Threshold for highly correlated columns is 0.85
+    # Multi-linearity between 'loan_amount', 'instalment' & 'funded_amount_inv'
+
+    # funded_amount_inv and loan_amount corrolation = 0.96
+    # instalmannt and loan_amount corrolation = 0.96
+    # instalmannt and funded_amount_inv corrolation = 0.93
+
+    # total_payment is highly corrolated with loan_amount, funded_amount_inv and instalment too, but only at 0.81, 0.78 and 0.81 respectively
+    # therefore not passed the 0.85 threshold
+
+    # desptie 'loan_amount', 'instalment' & 'funded_amount_inv' being past the threshold, they're all important for the analysis stage, so we wont be dropping any of them!
