@@ -10,11 +10,21 @@ from statsmodels.graphics.gofplots import qqplot
 from matplotlib import pyplot
 
 class DataFrameTransform:
+    '''
+    This class is used to apply transformations such as imputing or removing columns with missing data, to the dataframe.
+    '''
 
     def __init__(self, df_transform):
+        '''
+        This method is used to initalise this instance of the DataFrameTransform class.
+        '''
         self.df_transform = df_transform
 
     def num_of_nulls(self):
+        '''
+        This method is used to count the number of missing values in each of the columns in the data.
+        It is also made into a percentage and then returned.
+        '''
         cols = self.df_transform.columns
         # Define an empty list of null column rows
         null_coulmn_rows = []
@@ -37,31 +47,55 @@ class DataFrameTransform:
             self.df_transform.drop(col, axis=1, inplace=True)
 
     def drop_null_rows(self, column):
+        '''
+        This method is used to remove rows containing null or missing values.
+        '''
         self.df_transform.dropna(subset=column, inplace=True)
     
     def impute_zeros(self, column):
+        '''
+        This method is used to impute values to a value of zero.
+        '''
         for col in column:
             self.df_transform[col] = self.df_transform[col].fillna(0)
 
     def impute_median(self, column):
+        '''
+        This method is used to impute values to the median value of the column.
+        '''
         for col in column:
             self.df_transform[col] = self.df_transform[col].fillna(self.df_transform[col].median())
 
     def impute_mean(self, column):
+        '''
+        This method is used to impute values to the mean value of the column.
+        '''
         for col in column:
             self.df_transform[col] = self.df_transform[col].fillna(self.df_transform[col].mean())
 
     def log_transform(self, column):
+        '''
+        This method is used to transform the column values using a log transformation.
+        This is in hopes to make the data less skewed.
+        '''
         for col in column:
             self.df_transform[col] = self.df_transform[col].map(lambda i: np.log(i) if i > 0 else 0)
     
     def box_cox_transform(self, column):
+        '''
+        This method is used to transform the column values using a boxcox transformation.
+        This is in hopes to make the data less skewed.
+        '''
         for col in column:
             boxcox_column = self.df_transform[col] +0.01
             a, b = stats.boxcox(boxcox_column)
             self.df_transform[col] = a 
 
     def remove_outliers_iqr(self, data, threshold=1.5):
+        '''
+        This method is used to remove outliers of data.
+        This uses the Inter Quartile Range data to remove the data past the lower and upper quatiles.
+        '''
         q1 = np.percentile(data, 25)
         q3 = np.percentile(data, 75)
         iqr = q3 - q1
@@ -71,47 +105,81 @@ class DataFrameTransform:
         return filtered_data
 
     def remove_outliers_iqr_dataframe(self, column, threshold=1.5):
+        '''
+        This method is used to remove outliers of column data after a log or boxcox transformation.
+        This uses the Inter Quartile Range data to remove the data past the lower and upper quatiles.
+        '''
         filtered_dataframe = self.df_transform
         for col in column:
             filtered_dataframe[col] = self.remove_outliers_iqr(filtered_dataframe[col], threshold)
         return filtered_dataframe
     
-    def save_transformed_data(self, filename='transformed_data.csv'):
+    def save_transformed_data(self, filename='transformed_loan_data.csv'):
+        '''
+        This method is used to save the current dataframe as a new CSV file called 'transformed_loan_data.csv'
+        '''
         self.df_transform.to_csv(filename, index=False)
 
 class Plotter:
 
     def __init__(self, df_transform):
+        '''
+        This method is used to initalise this instance of the Plotter class.
+        '''
         self.df_transform = df_transform
 
     def agostino_k2_test(self, col):
+        '''
+        This method is used to calculate the result of the agostino k2 test on a specific column.
+        '''
         stat, p = normaltest(self.df_transform[col], nan_policy='omit')
         print('Statistics=%.3f, p=%.3f' % (stat, p))
 
     def qq_plot(self, col):
+        '''
+        This method is used to plot a qqplot of a specific column.
+        '''
         self.df_transform.sort_values(by=col, ascending=True)
         qq_plot = qqplot(self.df_transform[col], scale=1, line='q', fit=True)
         pyplot.show()
 
     def histogram(self, col):
+        '''
+        This method is used to plot a histogram of a specific column.
+        '''
         self.df_transform[col].hist(bins=40)
 
-    def density_plot(self, col):
+    def density_plot(self, col):'''
+        This method is used to plot a density_plot of a specific column.
+        '''
         sns.histplot(data=self.df_transform[col], kde=True)
         sns.despine()
 
     def boxplot(self, col):
+        '''
+        This method is used to plot a boxplot of a specific column.
+        '''
         fig = px.box(self.df_transform[col],width=600, height=500)
         fig.show()
 
     def scatter(self, col):
+        '''
+        This method is used to plot a scatter of a specific column.
+        '''
         sns.scatterplot(self.df_transform[col])
         
     def show_missing_nulls(self):
+        '''
+        This method is used to plot the missing values of the dataframe.
+        '''
         msno.matrix(self.df_transform)
         pyplot.show()
 
     def multi_plot(self, col):
+        '''
+        This method is used to calculate the mean, median, skewness and result of the agostino k2 test.
+        It also plots a blended histogram and density plot as well as plotting a qqplot of a specific column.
+        '''
         print(f'The median of {[col]} is {table_of_loans[col].median()}')
         print(f'The mean of {[col]} is {table_of_loans[col].mean()}')
         print(f"Skew of {[col]} column is {table_of_loans[col].skew()}")
@@ -125,6 +193,9 @@ class Plotter:
         pyplot.show()
 
     def find_skew(self, col):
+        '''
+        This method is used to calculate if a columns skewness is above or below the threshold 0.85.
+        '''
         if self.df_transform[col].skew() >= 0.86:
             print('Skewed!')
             print(f' {self.df_transform[col].skew()} is over 0.85')
@@ -132,6 +203,9 @@ class Plotter:
             print(f' {self.df_transform[col].skew()} is under 0.85')
 
     def multi_hist_plot(self, num_cols):
+        '''
+        This method is used to plot a histogram of all specified columns.
+        '''
         sns.set(font_scale=0.7)
         f = pd.melt(self.df_transform, value_vars=num_cols)
         g = sns.FacetGrid(f, col="variable", col_wrap=4,
@@ -140,6 +214,9 @@ class Plotter:
         pyplot.show()
 
     def multi_qq_plot(self, cols):
+        '''
+        This method is used to plot a qqplot of all specified columns.
+        '''
         remainder = 1 if len(cols) % 4 != 0 else 0
         rows = int(len(cols) / 4 + remainder)
 
@@ -151,6 +228,9 @@ class Plotter:
         pyplot.tight_layout()
 
     def show_outliers(self):
+        '''
+        This method is used to plot a boxplot of all specified columns in order to visualise what outliers are present.
+        '''
         #select only the numeric columns in the DataFrame
         df = self.df_transform.select_dtypes(include=['float64'])
         pyplot.figure(figsize=(18,14))
@@ -166,6 +246,10 @@ class Plotter:
         pyplot.show()
 
     def show_outliers_after_removal(self, dataframe, columns):
+        '''
+        This method is used to plot a boxplot of all specified columns after outliers have been removed. 
+        This is in order to visualise if the previous method worked.
+        '''
         pyplot.figure(figsize=(18, 14))
 
         for i, col in enumerate(columns):

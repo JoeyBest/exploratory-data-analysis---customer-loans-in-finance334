@@ -112,6 +112,9 @@ class DataTransform:
         self.df_info.dropna(subset=column_name, inplace=True)
 
     def save_transformed_data(self, filename='transformed_data.csv'):
+        '''
+        This method savves the dataframe to the current device and working directory as a CSV file called 'transformed_data.csv'.
+        '''
         self.loans_df.to_csv(filename, index=False)
 
 if __name__ ==  "__main__":
