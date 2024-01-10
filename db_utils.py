@@ -66,6 +66,9 @@ if __name__ == "__main__":#(for all code blocks you want run, add in later!)
 
     # was after extracted dataframe variable but it seems to work without it:
     # pd.DataFrame
+    
+    loan_data.save_to_csv("eda.csv")
+    # saves CSV file
 
     table_of_loans = loan_data.load_localdata_to_dataframe()
     print(table_of_loans)

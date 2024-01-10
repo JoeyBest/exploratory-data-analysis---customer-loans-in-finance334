@@ -111,6 +111,9 @@ class DataTransform:
         '''
         self.df_info.dropna(subset=column_name, inplace=True)
 
+    def save_transformed_data(self, filename='transformed_data.csv'):
+        self.loans_df.to_csv(filename, index=False)
+
 if __name__ ==  "__main__":
     table_of_loans = pd.read_csv('eda.csv')
     Transform = DataTransform(table_of_loans)
