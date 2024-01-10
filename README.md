@@ -14,20 +14,20 @@
 
 ## Project Description
 
-### <What is the EDA project?>
+### What is the EDA project?
 #### This project is based on a scenario of a large financial institution, where managing loans is a critical component of business operations.
 #### Understanding the loan portfolio data is essential in order to help the business make informed decisions are made about loan approvals, pricing and risk is efficiently managed.
 #### To do so I will perform exploratory data analysis (EDA) on the loan portfolio, using various statistical and data visualisation techniques, 
 #### which will allow me to report patterns, relationships, and anomalies in the loan data.
 
-### <Aim of the project:>
+### Aim of the project:
 - Help make informed decisions within the business
 - Gain a deeper understanding of the risk and return associated with the business' loans
 - Improve the performance and profitability of the loan portfolio
 - Be able to read and understand results from statistical analysis
 - Report any anomalies in the data
 
-### <What I learned:>
+### What I learned:
 - I have leant how to use classes effectively
 - I have leant how to transform data and how to impute/drop values
 - I have learnt how to create plots for data visualisation
