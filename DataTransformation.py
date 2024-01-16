@@ -111,11 +111,11 @@ class DataTransform:
         '''
         self.df_info.dropna(subset=column_name, inplace=True)
 
-    def save_transformed_data(self, filename='transformed_data.csv'):
+    def save_transformed_data(self, filename='full_loan_data.csv'):
         '''
         This method savves the dataframe to the current device and working directory as a CSV file called 'transformed_data.csv'.
         '''
-        self.loans_df.to_csv(filename, index=False)
+        self.df_info.to_csv(filename, index=False)
 
 if __name__ ==  "__main__":
     table_of_loans = pd.read_csv('eda.csv')
@@ -156,9 +156,9 @@ if __name__ ==  "__main__":
 
     print(Transform.df_info.dtypes)
     print(Transform.df_info.info())
-    RDSDatabaseConnector.saves_data_locally(Transform.df_info, 'Transformed_eda.csv')
-    # not working atm, but doesnt need to be saved yet
 
-    # possibly use this to save
-    # def save_transformed_data(self, filename='transformed_data.csv'):
-    #    self.loans_df.to_csv(filename, index=False)
+    # saves a new CSV of the df called 'full_loan_data.csv'
+    Transform.save_transformed_data('full_loan_data.csv')
+
+
+    

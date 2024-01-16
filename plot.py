@@ -120,6 +120,12 @@ class DataFrameTransform:
         '''
         self.df_transform.to_csv(filename, index=False)
 
+    def save_untransformed_data(self, filename='untransformed_loan_data.csv'):
+        '''
+        This method is used to save the current dataframe as a new CSV file called 'transformed_loan_data.csv'
+        '''
+        self.df_transform.to_csv(filename, index=False)
+
 class Plotter:
 
     def __init__(self, df_transform):
@@ -263,7 +269,8 @@ class Plotter:
         pyplot.show()
 
 if __name__ ==  "__main__":
-    table_of_loans = pd.read_csv('eda.csv')
+    # load the data in
+    table_of_loans = pd.read_csv('full_loan_data.csv.csv')
     df_cols = DataFrameTransform(table_of_loans)
     plot = Plotter(table_of_loans)
 
@@ -293,6 +300,9 @@ if __name__ ==  "__main__":
     print(df_cols.num_of_nulls())
     #re-visualise data to see no more Null values
     
+    df_cols.save_untransformed_data('untransformed_loan_data.csv')
+    # to save a version of untransformed data for use in Milestone 4 later on
+
     # Skewness of the data needs to be visualised:
     numerical_cols = ['loan_amount', 'funded_amount_inv', 'int_rate', 'instalment', 'dti', 'annual_inc', 'total_payment', 'total_accounts', 'open_accounts', 'last_payment_amount']
     plot.multi_hist_plot(numerical_cols)
@@ -301,20 +311,20 @@ if __name__ ==  "__main__":
     # and then will print the qq plot for all columns in the numerical_cols variable 
 
     # or use # following code for the:
-    # mean, median, agostino_k2_test, qqplot, histogram and density plot together on a single column
-    plot.multi_plot('instalment')
-    plot.multi_plot('open_accounts')
-    plot.multi_plot('total_rec_prncp')
-    plot.multi_plot('total_payment')
-    plot.multi_plot('total_rec_int')
-    plot.multi_plot('out_prncp')
-    plot.multi_plot('last_payment_amount')
-    plot.multi_plot('inq_last_6mths')
-    plot.multi_plot('annual_inc')
-    plot.multi_plot('delinq_2yrs')
-    plot.multi_plot('total_rec_late_fee')
-    plot.multi_plot('recoveries')
-    plot.multi_plot('collection_recovery_fee')
+    # mean, median, agostino_k2_test, qqplot, histogram and density plot together of a single column
+    # plot.multi_plot('instalment')
+    # plot.multi_plot('open_accounts')
+    # plot.multi_plot('total_rec_prncp')
+    # plot.multi_plot('total_payment')
+    # plot.multi_plot('total_rec_int')
+    # plot.multi_plot('out_prncp')
+    # plot.multi_plot('last_payment_amount')
+    # plot.multi_plot('inq_last_6mths')
+    # plot.multi_plot('annual_inc')
+    # plot.multi_plot('delinq_2yrs')
+    # plot.multi_plot('total_rec_late_fee')
+    # plot.multi_plot('recoveries')
+    # plot.multi_plot('collection_recovery_fee') 
     # add/change columns as you see fit 
 
     # perform the transformations on skewed columns:
@@ -334,8 +344,6 @@ if __name__ ==  "__main__":
     #    df_cols.log_transform(['recoveries'])
     #    df_cols.log_transform(['collection_recovery_fee'])
     # outliers have been used through performing these transformations
-
-    
 
     # code saves file to working directory
     df_cols.save_transformed_data('transformed_loan_data.csv')
