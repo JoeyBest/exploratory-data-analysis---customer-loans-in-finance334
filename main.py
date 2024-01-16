@@ -6,12 +6,12 @@ import plotly.express as px
 import seaborn as sns
 import statsmodels.api as sm
 import yaml
+from matplotlib import pyplot as plt
 from scipy import stats
 from scipy.stats import normaltest
 from statsmodels.graphics.gofplots import qqplot
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
-from matplotlib import pyplot as plt
 
 # %%
 def credentials_reader():
