@@ -28,13 +28,15 @@
 - Report any anomalies in the data
 
 ### What I learned:
-- I have leant how to use classes effectively
-- I have leant how to transform data and how to impute/drop values
-- I have learnt how to create plots for data visualisation
-- I have leant how to analyse a columns importance
-- I ahve learnt how to remove outliers that are affecting data skewness
-- I learnt how to interpret data from a financial portfolio
-
+- How to use classes effectively
+- How to transform data and how to impute/drop values
+- How to create plots for data visualisation
+- How to analyse a columns importance
+- How to remove outliers that are affecting data skewness
+- How to interpret data from a financial portfolio
+- How to to identify indicators that can show risky loans
+- How to calculate future repayment predictions
+- How to create new columns for data I will use again
 
 ## Installation instructions:
 
@@ -54,7 +56,7 @@
 - import statsmodels.api as sm
 - import sqlalchemy
 - import yaml
-- from matplotlib import pyplot
+- from matplotlib import pyplot as plt
 - from scipy import stats
 - from scipy.stats import normaltest
 - from statsmodels.graphics.gofplots import qqplot
@@ -64,27 +66,31 @@
 ## Usage instructions:
 
 1. Firstly activate the conda environment created to ensure the appropriate libraries are avalible and ready to use.
-2. Run the 'db_utils.py' file to extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
+  
+2. User can choose to use the code from main.py or main.ipynb (the .ipynb file may be better for those wanting a good visual representation of all the data).
+  
+3. The difference between the two is readability and speed.
+   'main.py' contains all the docstrings for users who want to use the same code and understand it better. Frurthermore, if you want to run the code quickly, remove the '# %%' and you will be able to run the rile top to bottom.
+   Whereas the main.ipynb goes through the code in sections, so each code needs running individually. But there is still explainations in the notes along the way.
+
+4. Running the chosen 'main.ipynb' or 'main.py' file will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
    - This step uses the confidental file credential.yaml to access the csv file.
    - The CSV file will now be saved in your working directory as 'eda.csv'.
      
-3. If code is going to be run from 'main.py' or 'main.ipynb', then running it once perform all actions needed on the data and save more up to dat versions of it.
-   - including: 'transformed_loan_data.csv' and 'filtered_loan_data.csv'
+5. If code is going to be run from 'main.py', then running it once perform all actions needed on the data and save more up to date versions of the data.
+   - including: 'transformed_loan_data.csv', 'filtered_loan_data.csv', 'full_loan_data.csv' and 'untransformed_loan_data.csv'
 
-#### COME BACK TO THE ABOVE AND COMPLETE!!!!!
-
-4. Running 'dataframe_info.py'  will provide you with a print of the column datatypes, a statistical description of the column 'loan_amount' (*feel free to change the columns*),
-   the no. of Unique Items in in the column 'grade', the shape_of_dataframe and the number of null values in the data.
-   This is just to get an understanding of some of the data
-
-5. 
-   #### ##################
-5. This contains the exploratory data analysis where the data is transformed to remove and impute nulls, visualise skewness, remove outliers and identify correlation.
-   This provides insights, conclusions and visualisations from the transformed data. Analysis on the current state of loans, current and potential losses as well as identifying risk      indicating variables are provided in this notebook.
-#### ################## come back to this!!!!!
+6. Running the code from 'main.ipynb' will take you chronolgically through the sections:
+   - Accessing the df
+   - Exploring the data
+   - Transforming pt 1
+   - Transforming pt 2
+   - Visualising the data
+   - Outlier Stage
+   - Milestone 4: Current state of the loans
 
 ## File structure of the project:
-'''bash
+```
 .
 └── /Users/
     └── joeybest/
@@ -92,19 +98,24 @@
             └── EDA/
                 └── exploratory-data-analysis---customer-loans-in-finance334/
                     ├── credentials.yaml
-                    ├── eda.csv
-                    ├── db_utils.py
-                    ├── dataframe_info.py
                     ├── dataframe_info.ipynb
-                    ├── DataTransformation.py
+                    ├── dataframe_info.py
                     ├── DataTransformation.ipynb
-                    ├── plot.py
+                    ├── DataTransformation.py
+                    ├── db_utils.py
+                    ├── eda.csv
+                    ├── filtered_loan_data.csv
+                    ├── full_loan_data.csv
+                    ├── main.ipynb
+                    ├── main.py
                     ├── plot.ipynb
-                    ├── transformed_loan_data.csv
+                    ├── plot.py
                     ├── README.md
+                    ├── transformed_loan_data.csv
+                    ├── untransformed_loan_data.csv
                     └── __pycache__/
                         ├── DataTransformation.cpython-311.pyc
                         └── db_utils.cpython-311.pyc
-'''
+```
 
 ## License information:
