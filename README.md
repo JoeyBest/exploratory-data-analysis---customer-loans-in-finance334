@@ -84,26 +84,27 @@
 #### ################## come back to this!!!!!
 
 ## File structure of the project:
-####.
-####└── /Users/
-####    └── joeybest/
-####        └── Ai Core/
-####            └── EDA/
-####                └── exploratory-data-analysis---customer-loans-in-finance334/
-####                    ├── credentials.yaml
-####                    ├── eda.csv
-####                    ├── db_utils.py
-####                    ├── dataframe_info.py
-####                    ├── dataframe_info.ipynb
-####                    ├── DataTransformation.py
-####                    ├── DataTransformation.ipynb
-####                    ├── plot.py
-####                    ├── plot.ipynb
-####                    ├── transformed_loan_data.csv
-####                    ├── README.md
-####                    └── __pycache__/
-####                        ├── DataTransformation.cpython-311.pyc
-####                        └── db_utils.cpython-311.pyc
-
+'''
+.
+└── /Users/
+    └── joeybest/
+        └── Ai Core/
+            └── EDA/
+                └── exploratory-data-analysis---customer-loans-in-finance334/
+                    ├── credentials.yaml
+                    ├── eda.csv
+                    ├── db_utils.py
+                    ├── dataframe_info.py
+                    ├── dataframe_info.ipynb
+                    ├── DataTransformation.py
+                    ├── DataTransformation.ipynb
+                    ├── plot.py
+                    ├── plot.ipynb
+                    ├── transformed_loan_data.csv
+                    ├── README.md
+                    └── __pycache__/
+                        ├── DataTransformation.cpython-311.pyc
+                        └── db_utils.cpython-311.pyc
+'''
 
 ## License information:
