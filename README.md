@@ -84,7 +84,7 @@
 #### ################## come back to this!!!!!
 
 ## File structure of the project:
-'''
+'''bash
 .
 └── /Users/
     └── joeybest/
