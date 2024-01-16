@@ -149,7 +149,8 @@ class Plotter:
         '''
         self.df_transform[col].hist(bins=40)
 
-    def density_plot(self, col):'''
+    def density_plot(self, col):
+        '''
         This method is used to plot a density_plot of a specific column.
         '''
         sns.histplot(data=self.df_transform[col], kde=True)
