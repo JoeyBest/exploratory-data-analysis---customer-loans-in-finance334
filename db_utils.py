@@ -3,8 +3,6 @@ import yaml
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
 
-# if credential_reader() doesnt work add the below back into code:
-#yaml_credntials = r"/Users/joeybest/Ai Core/EDA/exploratory-data-analysis---customer-loans-in-finance334/credentials.yaml"
 
 def credentials_reader():
     '''
@@ -81,15 +79,11 @@ class RDSDatabaseConnector:
         list
             returns a shortened version of the loan payments file information.
         '''
-        # Defining the columns to read
-        usecols = ["id", "member_id","loan_amount", "funded_amount", "funded_amount_inv", "term", "int_rate", "instalment", "grade", "sub_grade", "employment_length", "home_ownership", "annual_inc", "verification_status", "issue_date", "loan_status", "payment_plan", "purpose", "dti", "delinq_2yrs", "earliest_credit_line", "inq_last_6mths", "mths_since_last_record", "open_accounts", "total_accounts", "out_prncp", "out_prncp_inv", "total_payment", "total_rec_int", "total_rec_late_fee", "recoveries", "collection_recovery_fee", "last_payment_date", "last_payment_amount", "next_payment_date", "last_credit_pull_date", "collections_12_mths_ex_med", "mths_since_last_major_derog", "policy_code", "application_type"]
-    # Read data with subset of columns
         loan_data_df = pd.read_csv("/Users/joeybest/Ai Core/EDA/exploratory-data-analysis---customer-loans-in-finance334/eda.csv", index_col="id", usecols=usecols)
         return loan_data_df
 
 
-if __name__ == "__main__":#(for all code blocks you want run, add in later!)
-#### come back to later on
+if __name__ == "__main__":
 
 # reads credentials from yaml file
     credentials = credentials_reader()
