@@ -47,22 +47,6 @@
 2. You may want to create a new conda environment for all the libraries that you will need to use for this project.
   - conda create --name *'insert conda env name'*
 
-#### Below can be seen a list of libraries needed to complete the project:
-- import missingno as msno
-- import numpy as np
-- import pandas as pd
-- import plotly.express as px
-- import seaborn as sns
-- import statsmodels.api as sm
-- import sqlalchemy
-- import yaml
-- from matplotlib import pyplot as plt
-- from scipy import stats
-- from scipy.stats import normaltest
-- from statsmodels.graphics.gofplots import qqplot
-- from sqlalchemy import create_engine
-- from sqlalchemy import inspect
-
 ## Usage instructions:
 
 1. Firstly activate the conda environment created to ensure the appropriate libraries are avalible and ready to use.
