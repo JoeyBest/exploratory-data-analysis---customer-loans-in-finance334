@@ -33,6 +33,11 @@ class RDSDatabaseConnector:
     def __init__(self, credentials):
         '''
         This method is used to initialise this instance of the RDSDatabaseConnector class.
+
+        Parameters:
+        ----------
+        credentials: dict
+        Dictionary containing 'Host', 'Password', 'User', 'Database' and 'Port' required for the sqlalchemy to establish a connection with the RDS.
         '''
         self.credentials = credentials
         
@@ -58,6 +63,11 @@ class RDSDatabaseConnector:
     def database_to_dataframe(self):
         '''
         This method connects to the RDS in order to extract the 'loan_payments' table into a pandas dataframe.
+
+        Returns:
+        ----------
+        list
+            returns the top 10 and bottom 10 rows and columns in the loan payments.
         '''
         ######### maybe add with self.engine.connect() as connection: (only if it doesn't work like this)
         self.loans = pd.read_sql_table('loan_payments', self.engine)
@@ -73,6 +83,11 @@ class RDSDatabaseConnector:
     def load_localdata_to_dataframe(self):
         '''
         This method uses the saved CSV file to load the data into a pandas dataframe.
+        
+        Returns:
+        ----------
+        list
+            returns a shortened version of the loan payments file information.
         '''
         # Defining the columns to read
         usecols = ["id", "member_id","loan_amount", "funded_amount", "funded_amount_inv", "term", "int_rate", "instalment", "grade", "sub_grade", "employment_length", "home_ownership", "annual_inc", "verification_status", "issue_date", "loan_status", "payment_plan", "purpose", "dti", "delinq_2yrs", "earliest_credit_line", "inq_last_6mths", "mths_since_last_record", "open_accounts", "total_accounts", "out_prncp", "out_prncp_inv", "total_payment", "total_rec_int", "total_rec_late_fee", "recoveries", "collection_recovery_fee", "last_payment_date", "last_payment_amount", "next_payment_date", "last_credit_pull_date", "collections_12_mths_ex_med", "mths_since_last_major_derog", "policy_code", "application_type"]
