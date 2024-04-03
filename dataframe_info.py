@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 class DataFrameInfo:
     '''
     This class is used to dive into the a dataframe and begin to understand the information it contains.
@@ -53,6 +54,8 @@ class DataFrameInfo:
         Parameters:
         ----------
         columns: int
+            The column value within the table.
+        columns: str
             The column value within the table.
 
         Returns:
