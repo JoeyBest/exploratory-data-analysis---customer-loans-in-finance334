@@ -89,24 +89,20 @@
             └── EDA/
                 └── exploratory-data-analysis---customer-loans-in-finance334/
                     ├── credentials.yaml
-                    ├── dataframe_info.ipynb
                     ├── dataframe_info.py
-                    ├── DataTransformation.ipynb
                     ├── DataTransformation.py
                     ├── db_utils.py
-                    ├── eda.csv
-                    ├── filtered_loan_data.csv
-                    ├── full_loan_data.csv
-                    ├── main.ipynb
-                    ├── main.py
-                    ├── plot.ipynb
                     ├── plot.py
+                    ├── main.ipynb
                     ├── README.md
-                    ├── transformed_loan_data.csv
-                    ├── untransformed_loan_data.csv
-                    └── __pycache__/
-                        ├── DataTransformation.cpython-311.pyc
-                        └── db_utils.cpython-311.pyc
+                    ├── requirements.txt
+                    ├── __pycache__/
+                    └── Data/
+                        ├── eda.csv
+                        ├── full_loan_data.csv
+                        ├── untransformed_loan_data.csv
+                        ├── transformed_loan_data.csv
+                        └── filtered_loan_data.csv
 ```
 
 ## License information:
