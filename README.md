@@ -51,17 +51,21 @@
 
 1. Firstly activate the conda environment created to ensure the appropriate libraries are avalible and ready to use.
   
-2. User can choose to use the code from main.py or main.ipynb (the .ipynb file may be better for those wanting a good visual representation of all the data).
+2. User can choose to use the code from main.ipynb or follow through the .py files (the .ipynb file may be better for those wanting a good visual representation of all the data).
+   - The order of .py files for user ease: db_utils.py, dataframe_info.py, DataTransformation.py, plot.py
   
 3. The difference between the two is readability and speed.
-   'main.py' contains all the docstrings for users who want to use the same code and understand it better. Frurthermore, if you want to run the code quickly, remove the '# %%' and you will be able to run the rile top to bottom.
-   Whereas the main.ipynb goes through the code in sections, so each code needs running individually. But there is still explainations in the notes along the way.
+   The .py files contain all the docstrings for users who want to use the same code and understand it better. 
+   The .py files use 
+   ```
+   if __name__ == "__main__":``` to encapsulate important parts of code, but it doesnt contain everything needed to analyse, clean and visualise all partsof the data. 
+   Whereas the main.ipynb goes through the code in sections, so each code needs running individually. But there is still explainations in the notes and markdown boxes along the way.
 
-4. Running the chosen 'main.ipynb' or 'main.py' file will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
+4. Running the chosen 'main.ipynb' file will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
    - This step uses the confidental file credential.yaml to access the csv file.
    - The CSV file will now be saved in your working directory as 'eda.csv'.
      
-5. If code is going to be run from 'main.py', then running it once perform all actions needed on the data and save more up to date versions of the data.
+5. If code is going to be run from the .py files, then running each one once, will perform all actions needed on the data and save more up to date versions of the data.
    - including: 'transformed_loan_data.csv', 'filtered_loan_data.csv', 'full_loan_data.csv' and 'untransformed_loan_data.csv'
 
 6. Running the code from 'main.ipynb' will take you chronolgically through the sections:
@@ -71,7 +75,8 @@
    - Transforming pt 2
    - Visualising the data
    - Outlier Stage
-   - Milestone 4: Current state of the loans
+   - Analysis and Visualisation
+   - Summary
 
 ## File structure of the project:
 ```
