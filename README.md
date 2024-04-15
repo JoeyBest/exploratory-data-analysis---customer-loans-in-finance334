@@ -56,9 +56,11 @@
   
 3. The difference between the two is readability and speed.
    The .py files contain all the docstrings for users who want to use the same code and understand it better. 
-   The .py files use 
+   The .py files uses 
    ```
-   if __name__ == "__main__":``` to encapsulate important parts of code, but it doesnt contain everything needed to analyse, clean and visualise all partsof the data. 
+   if __name__ == "__main__":
+   ``` 
+   to encapsulate important parts of code, but it doesnt contain everything needed to analyse, clean and visualise all partsof the data. 
    Whereas the main.ipynb goes through the code in sections, so each code needs running individually. But there is still explainations in the notes and markdown boxes along the way.
 
 4. Running the chosen 'main.ipynb' file will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
