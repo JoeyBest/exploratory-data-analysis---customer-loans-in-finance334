@@ -43,8 +43,8 @@ class DataTransform:
 
         Returns:
         ----------
-        int
-            The number of unique values is printed.
+        bool
+            The unique bool type is printed.
         '''
         mask = {'n': False, 'y': True}
         self.df_info[column_name].map(mask)
@@ -190,7 +190,7 @@ class DataTransform:
         '''
         self.df_info.dropna(subset=column_name, inplace=True)
 
-    def save_transformed_data(self, filename='full_loan_data.csv'):
+    def save_full_data(self, filename='full_loan_data.csv'):
         '''
         This method saves the dataframe to the current device and working directory as a CSV file called 'transformed_data.csv'.
         
@@ -206,19 +206,15 @@ if __name__ ==  "__main__":
     Transform = DataTransform(table_of_loans)
 
     Transform.to_boolean('payment_plan')
-    # transforms n to false and y to true in the payment plan column
-    # prints [True] as the only unique value in the dataframe column
 
     to_object_columns = ['id', 'member_id', 'policy_code']
     Transform.to_object(to_object_columns)
     
     convert_categories = ['grade', 'sub_grade', 'home_ownership', 'verification_status', 'loan_status', 'purpose', 'employment_length']
     Transform.to_category(convert_categories)
-    # transforms column values to catagories
 
     string_month_and_year = ['last_credit_pull_date', 'next_payment_date', 'last_payment_date', 'earliest_credit_line', 'issue_date']
     Transform.strings_to_dates(string_month_and_year)
-    # transforms strings to a datetime format MonthYear
 
     string_numbers = ['term']
     Transform.extract_integer_from_string(string_numbers)
@@ -228,10 +224,6 @@ if __name__ ==  "__main__":
 
     drop_cols = ['funded_amount', 'application_type', 'policy_code', 'out_prncp_inv', 'total_payment_inv']
     Transform.drop_column(drop_cols)
-    # funded_amount is missing some data but contains the same data as funded_amount_inv, so we can drop it
-    # out_prncp_inv contains the same data as out_prncp, so we can drop it
-    # total_payment_inv contains the same data as total_payment, so we can drop it
-    # application_type and policy_code are the same for everyone and doesn't provide us with much info
     
     int_numbers = ['loan_amount', 'funded_amount_inv', 'annual_inc', 'term', 'open_accounts', 'total_accounts', 'collections_12_mths_ex_med', 'mths_since_last_delinq', 'mths_since_last_major_derog']
     Transform.to_interger(int_numbers)
@@ -241,8 +233,4 @@ if __name__ ==  "__main__":
     print(Transform.df_info.dtypes)
     print(Transform.df_info.info())
 
-    # saves a new CSV of the df called 'full_loan_data.csv'
-    Transform.save_transformed_data('full_loan_data.csv')
-
-
-    
+    Transform.save_full_data('full_loan_data.csv')

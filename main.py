@@ -303,7 +303,7 @@ class DataTransform:
         '''
         self.df_info.dropna(subset=column_name, inplace=True)
 
-    def save_transformed_data(self, filename='full_loan_data.csv'):
+    def save_full_data(self, filename='full_loan_data.csv'):
         '''
         This method savves the dataframe to the current device and working directory as a CSV file called 'transformed_data.csv'.
         '''
@@ -351,7 +351,7 @@ if __name__ ==  "__main__":
     print(Transform.df_info.info())
 
     # saves a new CSV of the df called 'full_loan_data.csv'
-    Transform.save_transformed_data('full_loan_data.csv')
+    Transform.save_full_data('full_loan_data.csv')
 
 # %%
 
