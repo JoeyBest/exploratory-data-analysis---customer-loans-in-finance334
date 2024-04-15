@@ -377,8 +377,7 @@ class Plotter:
 
         cmap = sns.diverging_palette(220, 10, as_cmap=True) # Define the color map
 
-        sns.heatmap(corr, mask=mask, square=True, linewidths=5,
-                    annot=True, cmap=cmap) # Generate the heatmap
+        sns.heatmap(corr, mask=mask, square=True, linewidths=5, annot=True, cmap=cmap) # Generate the heatmap
 
         # Show the plot
         plt.show()
@@ -393,6 +392,7 @@ class Plotter:
         col: list
             The column that will be plotted and measures of central tendency displayed.
         '''
+        table_of_loans = pd.read_csv('untransformed_loan_data.csv')
         print(f'The median of {[col]} is {table_of_loans[col].median()}')
         print(f'The mean of {[col]} is {table_of_loans[col].mean()}')
         print(f"Skew of {[col]} column is {table_of_loans[col].skew()}")
@@ -518,97 +518,3 @@ if __name__ ==  "__main__":
     df_cols.drop_column(['mths_since_last_delinq', 'next_payment_date', 'mths_since_last_record', 'mths_since_last_major_derog'])
 
     print(df_cols.num_of_nulls())
-    
-
-    # Skewness of the data needs to be visualised:
-    numerical_cols = ['loan_amount', 'funded_amount_inv', 'int_rate', 'instalment', 'dti', 'annual_inc', 'total_payment', 'total_accounts', 'open_accounts', 'last_payment_amount']
-    plot.multi_hist_plot(numerical_cols)
-    plot.multi_qq_plot(numerical_cols)
-    
-    # perform the transformations on skewed columns:
-    boxcox_cols = ['loan_amount', 'instalment', 'int_rate', 'dti', 'funded_amount_inv', 'total_payment']
-    df_cols.boxcox_transform(boxcox_cols)
-
-    logt_cols = ['annual_inc', 'total_accounts', 'open_accounts', 'last_payment_amount']
-    df_cols.log_transform(logt_cols)
-
-    # May not need to transfor below columns, but is here just in case:
-    #    df_cols.log_transform(['total_rec_prncp'])
-    #    df_cols.log_transform(['total_rec_int'])
-    #    df_cols.log_transform(['out_prncp'])
-    #    df_cols.log_transform(['inq_last_6mths'])
-    #    df_cols.log_transform(['delinq_2yrs'])
-    #    df_cols.log_transform(['total_rec_late_fee'])
-    #    df_cols.log_transform(['recoveries'])
-    #    df_cols.log_transform(['collection_recovery_fee'])
-    # outliers have been used through performing these transformations
-
-    # code saves file to working directory
-    df_cols.save_transformed_data('transformed_loan_data.csv')
-
-    transformed_loans = pd.read_csv('transformed_loan_data.csv')
-    df_cols = DataFrameTransform(transformed_loans)
-    plot = Plotter(transformed_loans)
-
-    plot.multi_qq_plot(numerical_cols)
-    # prints qqplot of all columns in 'numerical_cols', some outliers can be seen, lets look closer
-    plot.show_outliers()
-    # boxplot of columns showing outliers present past the IQR
-    plot.boxplot(numerical_cols)
-    #visualised for the numerical_cols
-
-    # Removing outliers and re-visualising boxplots
-    filtered_df = df_cols.remove_outliers_iqr_dataframe(column= numerical_cols, threshold=1.5)
-    plot.show_outliers_after_removal(dataframe=filtered_df, columns=numerical_cols)
-
-    # Making the filtered data a variable to use the classes
-    df_without_outliers = DataFrameTransform(filtered_df)
-    plot_without_outliers = Plotter(filtered_df)
-
-
-    # Checking data again
-    plot_without_outliers.show_missing_nulls()
-    df_without_outliers.num_of_nulls()
-    # removing the outliers has left Null values, so we will either transform or remove the rows
-
-    # COLUMN                COUNT   % NULL COUNT
-    # loan_amount           54145   0.011080
-    # funded_amount_inv     53992   0.293623
-    # int_rate              54107   0.081254
-    # instalment            54111   0.073868
-    # annual_inc            53000   2.125538
-    # open_accounts         53631   0.960278
-    # total_accounts        53282   1.604772
-    # total_payment         53971   0.332404
-    # last_payment_amount   53950   0.371184
-
-    # values are all very low
-    # when imputing outliers, the median is more robust and less influenced by extreme values.
-    to_be_median_imputed = ['loan_amount', 'funded_amount_inv',  'int_rate', 'instalment', 'annual_inc', 'open_accounts', 'total_accounts', 'total_payment', 'last_payment_amount']
-    df_without_outliers.impute_median(to_be_median_imputed)
-
-    # Checking data again
-    plot_without_outliers.show_missing_nulls()
-    df_without_outliers.num_of_nulls()
-    # No Null values
-
-    # checking skewness and outliers
-    plot_without_outliers.multi_hist_plot(numerical_cols)
-    plot_without_outliers.multi_qq_plot(numerical_cols)
-    # data improved!
-
-
-    # corrolation matrix: checking for multicollinearity issues, will drop overly corrolated columns
-    plot_without_outliers.heatmap(numerical_cols)
-
-    ## Threshold for highly correlated columns is 0.85
-    # Multi-linearity between 'loan_amount', 'instalment' & 'funded_amount_inv'
-
-    # funded_amount_inv and loan_amount corrolation = 0.96
-    # instalmannt and loan_amount corrolation = 0.96
-    # instalmannt and funded_amount_inv corrolation = 0.93
-
-    # total_payment is highly corrolated with loan_amount, funded_amount_inv and instalment too, but only at 0.81, 0.78 and 0.81 respectively
-    # therefore not passed the 0.85 threshold
-
-    # desptie 'loan_amount', 'instalment' & 'funded_amount_inv' being past the threshold, they're all important for the analysis stage, so we wont be dropping any of them!

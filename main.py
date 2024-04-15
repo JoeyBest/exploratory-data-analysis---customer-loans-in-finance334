@@ -533,6 +533,7 @@ class Plotter:
         This method is used to calculate the mean, median, skewness and result of the agostino k2 test.
         It also plots a blended histogram and density plot as well as plotting a qqplot of a specific column.
         '''
+        table_of_loans = pd.read_csv('untransformed_loan_data.csv')
         print(f'The median of {[col]} is {table_of_loans[col].median()}')
         print(f'The mean of {[col]} is {table_of_loans[col].mean()}')
         print(f"Skew of {[col]} column is {table_of_loans[col].skew()}")
@@ -674,6 +675,30 @@ if __name__ ==  "__main__":
     # plot.multi_plot('recoveries')
     # plot.multi_plot('collection_recovery_fee') 
     # add/change columns as you see fit 
+
+    # skew data
+    # normal skew?
+    # Skew of int_rate column is 0.45661978102982004/// logt= -0.38/// boxcox = 0.46
+    # Skew of total_accounts column is 0.7790400286166349/// logt= -0.68/// boxcox = 0.78
+    # Skew of loan_amount column is 0.8049220181025606/// logt= -0.68/// boxcox = 0.80
+    # Skew of funded_amount_inv column is 0.8133743608921553/// logt= -3.33/// boxcox = 0.81
+    # Skew of dti column is 0.18910057534680505/// logt= -1.98/// boxcox = 0.19
+
+    # positive skew:
+    # Skew of instalment column is 0.9965721690437305/// logt= -0.67/// # ? boxcox = 1
+    # Skew of open_accounts column is 1.0591835802494733/// logt= -0.47/// # boxcox = 1.06
+    # Skew of total_rec_prncp column is 1.2626785390807123/// logt= -0.92/// # boxcox = 1.26
+    # Skew of total_payment column is 1.2698752968451772/// logt= -0.75/// # boxcox = 1.27
+    # Skew of total_rec_int column is 2.2045848938701638/// logt= -0.56/// # boxcox = 2.20
+    # Skew of out_prncp column is 2.35405079479137/// logt=0.57/// # boxcox = 2.35
+    # Skew of last_payment_amount column is 2.4972203995928135/// logt=0.13/// # boxcox = 2.50
+    # Skew of inq_last_6mths column is 3.253522804381087/// logt=1.97///# boxcox = 3.25
+    # Skew of delinq_2yrs column is 5.376384516017939 /// # logt=5.42/// boxcox = 5.38
+    # Skew of annual_inc column is 8.717499091755876/// logt= 0.14/// # boxcox = 8.72
+    # Skew of total_rec_late_fee column is 13.174553220535644/// logt=5.51///# boxcox = 13.17
+    # Skew of recoveries column is 14.389298686317593/// logt=3.82/// # boxcox = 14.39
+    # Skew of collections_12_mths_ex_med column is 20.307695011511576/// # logt=65.06/// boxcox = 20.31
+    # Skew of collection_recovery_fee column is 27.807756579876514/// logt=5.41/// # boxcox = 27.81
 
     # perform the transformations on skewed columns:
     boxcox_cols = ['loan_amount', 'instalment', 'int_rate', 'dti', 'funded_amount_inv', 'total_payment']
