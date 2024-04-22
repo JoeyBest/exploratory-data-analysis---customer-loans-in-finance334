@@ -79,7 +79,7 @@ class RDSDatabaseConnector:
         list
             returns a shortened version of the loan payments file information.
         '''
-        loan_data_df = pd.read_csv("/Users/joeybest/Ai Core/EDA/exploratory-data-analysis---customer-loans-in-finance334/eda.csv", index_col="id")
+        loan_data_df = pd.read_csv("/Users/joeybest/Ai Core/EDA/exploratory-data-analysis---customer-loans-in-finance334/eda.csv")
         return loan_data_df
 
 
