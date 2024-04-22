@@ -6,19 +6,17 @@
 | ----------- | ----------- |
 | 1 | Table of Contents |
 | 2 | Project description |
-| 5 | What I learned |
-| 6 | Installation instructions |
-| 7 | Usage instructions |
-| 8 | File structure of the project |
-| 9 | License information |
+| 3 | Installation instructions |
+| 4 | Usage instructions |
+| 5 | File structure of the project |
+| 6 | License information |
 
 ## Project Description
 
 ### What is the EDA project?
 #### This project is based on a scenario of a large financial institution, where managing loans is a critical component of business operations.
-#### Understanding the loan portfolio data is essential in order to help the business make informed decisions are made about loan approvals, pricing and risk is efficiently managed.
-#### To do so I will perform exploratory data analysis (EDA) on the loan portfolio, using various statistical and data visualisation techniques, 
-#### which will allow me to report patterns, relationships, and anomalies in the loan data.
+#### Understanding the loan portfolio data is essential in order to help the business make sure informed decisions are made about loan approvals, pricing and risk is efficiently managed.
+#### To do so I will perform exploratory data analysis (EDA) on the loan portfolio, using various statistical and data visualisation techniques. Which will allow me to report patterns, relationships, and anomalies in the loan data.
 
 ### Aim of the project:
 - Help make informed decisions within the business
@@ -38,6 +36,7 @@
 - How to calculate future repayment predictions
 - How to create new columns for data I will use again
 
+
 ## Installation instructions:
 
 1. You will need to download and clone the git repository (Repo):
@@ -46,31 +45,29 @@
   
 2. You may want to create a new conda environment for all the libraries that you will need to use for this project.
   - conda create --name *'insert conda env name'*
+  - All libraries used can be found in 'requirements.txt'
+
 
 ## Usage instructions:
 
 1. Firstly activate the conda environment created to ensure the appropriate libraries are avalible and ready to use.
+
+1. The user will need to run the db_utils.py file first as this will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
+   - This step uses the confidental file credential.yaml to access the csv file.
+   - The CSV file will now be saved in your working directory as 'eda.csv'.
   
-2. User can choose to use the code from main.ipynb or follow through the .py files (the .ipynb file may be better for those wanting a good visual representation of all the data).
-   - The order of .py files for user ease: db_utils.py, dataframe_info.py, DataTransformation.py, plot.py
+1. Now the user can use the main.ipynb file to access the saved 'eda.csv' file. Allowing for investigations of the data to begin. 
   
-3. The difference between the two is readability and speed.
-   The .py files contain all the docstrings for users who want to use the same code and understand it better. 
-   The .py files uses 
+1. The difference between main.ipynb and the .py files is readability and speed.
+   - The .ipynb file is better for those wanting a good visual representation of all the data. It goes through the code in sections, so each block of code is running individually. But there are still explainations in the notes and markdown boxes along the way.
+
+   - The .py files are better for those who want to use the same code and understand it better by reading the docstrings (the order of .py files for user ease: db_utils.py, dataframe_info.py, DataTransformation.py, plot.py). The .py files also use 
    ```
    if __name__ == "__main__":
    ``` 
-   to encapsulate important parts of code, but it doesnt contain everything needed to analyse, clean and visualise all partsof the data. 
-   Whereas the main.ipynb goes through the code in sections, so each code needs running individually. But there is still explainations in the notes and markdown boxes along the way.
+   to encapsulate important parts of code, but it doesn't contain everything needed to analyse, clean and visualise all parts of the data. 
 
-4. Running the chosen 'main.ipynb' file will extract the data from an AWS Relational Database (RDS) and write it into the appropriate csv file.
-   - This step uses the confidental file credential.yaml to access the csv file.
-   - The CSV file will now be saved in your working directory as 'eda.csv'.
-     
-5. If code is going to be run from the .py files, then running each one once, will perform all actions needed on the data and save more up to date versions of the data.
-   - including: 'transformed_loan_data.csv', 'filtered_loan_data.csv', 'full_loan_data.csv' and 'untransformed_loan_data.csv'
-
-6. Running the code from 'main.ipynb' will take you chronolgically through the sections:
+1. Running the code from 'main.ipynb' will take you chronolgically through the sections:
    - Accessing the df
    - Exploring the data
    - Transforming pt 1
